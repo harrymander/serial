@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(serial)
+project(serial VERSION 0.1.0 LANGUAGES CXX)
 
 add_library(${PROJECT_NAME} STATIC src/serial.cc)
 
