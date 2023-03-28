@@ -42,7 +42,7 @@ else()
 endif()
 
 ## Tests
-set(ENABLE_TESTING NO CACHE BOOL "Enable tests")
-if(ENABLE_TESTING)
+option(SERIAL_BUILD_TESTS "Build tests" OFF)
+if(SERIAL_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
