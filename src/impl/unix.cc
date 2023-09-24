@@ -455,7 +455,8 @@ Serial::SerialImpl::reconfigurePort ()
   // Compensate for the stopbits_one_point_five enum being equal to int 3,
   // and not 1.5.
   if (stopbits_ == stopbits_one_point_five) {
-    byte_time_ns_ += ((1.5 - stopbits_one_point_five) * bit_time_ns);
+    static_assert(stopbits_one_point_five == 3);
+    byte_time_ns_ -= 1.5 * bit_time_ns;
   }
 }
 
