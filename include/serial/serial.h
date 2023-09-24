@@ -185,6 +185,11 @@ public:
           stopbits_t stopbits = stopbits_one,
           flowcontrol_t flowcontrol = flowcontrol_none);
 
+  Serial(const Serial&&) = delete;
+  Serial& operator=(const Serial&&) = delete;
+  Serial(Serial&&) = delete;
+  Serial& operator=(Serial&&) = delete;
+
   /*! Destructor */
   virtual ~Serial ();
 
