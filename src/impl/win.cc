@@ -3,6 +3,8 @@
 /* Copyright 2012 William Woodall and John Harrison */
 
 #include <sstream>
+#include <cstdlib>
+#include <system_error>
 
 #include "serial/impl/win.h"
 
@@ -358,13 +360,47 @@ Serial::SerialImpl::write (const uint8_t *data, size_t length)
 void
 Serial::SerialImpl::setPort (const string &port)
 {
-  port_ = wstring(port.begin(), port.end());
+  port_.resize(port.size() + 1);
+  size_t new_size;
+  const errno_t err = mbstowcs_s(
+    &new_size,
+    port_.data(),
+    port_.size(),
+    port.c_str(),
+    port_.size() - 1 // not including null-terminator
+  );
+  if (err) {
+    throw std::system_error(
+      err,
+      std::generic_category(),
+      "Error converting multibyte string to wide string"
+    );
+  }
+  port_.resize(new_size - 1); // new_size includes null-terminator
 }
 
 string
 Serial::SerialImpl::getPort () const
 {
-  return string(port_.begin(), port_.end());
+  string str;
+  str.resize(port_.size() * 2 + 1);
+  size_t new_size;
+  const errno_t err = wcstombs_s(
+    &new_size,
+    str.data(),
+    str.size(),
+    port_.c_str(),
+    str.size() - 1 // not including null-terminator
+  );
+  if (err) {
+    throw std::system_error(
+      err,
+      std::generic_category(),
+      "Error converting wide string to multibyte string"
+    );
+  }
+  str.resize(new_size - 1); // new_size includes the null-terminator
+  return str;
 }
 
 void
