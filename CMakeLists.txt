@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(serial VERSION 0.1.0 LANGUAGES CXX)
 
 add_library(${PROJECT_NAME} STATIC src/serial.cc)
