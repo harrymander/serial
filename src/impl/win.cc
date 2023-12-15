@@ -258,7 +258,6 @@ Serial::SerialImpl::reconfigurePort ()
 
   // activate settings
   if (!SetCommState(fd_, &dcbSerialParams)){
-    CloseHandle(fd_);
     THROW (IOException, "Error setting serial port settings.");
   }
 
