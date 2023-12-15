@@ -3,7 +3,7 @@ project(serial VERSION 0.1.0 LANGUAGES CXX)
 
 add_library(${PROJECT_NAME} STATIC src/serial.cc)
 
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 if(UNIX)
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall)
 endif()
